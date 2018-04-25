@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Q2</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+
+  <!-- Custom styles -->
+  <link href="/css/main.css" rel="stylesheet">
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+  <script defer src="/src/helpers.js"></script>
+  <script defer src="/src/dashboard/dashboard.js"></script>
+    <style type="text/css">
+
+      html,
+      body,
+      header,
+      .carousel {
+        height: 60vh;
+      }
+
+      @media (max-width: 740px) {
+        html,
+        body,
+        header,
+        .carousel {
+          height: 100vh;
+        }
+      }
+
+      @media (min-width: 800px) and (max-width: 850px) {
+        html,
+        body,
+        header,
+        .carousel {
+          height: 100vh;
+        }
+      }
+
+      @media (min-width: 800px) and (max-width: 850px) {
+              .navbar:not(.top-nav-collapse) {
+                  background: #929FBA!important;
+              }
+          }
+    </style>
+</head>
+
+<body>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+      <!-- Brand -->
+      <a class="navbar-brand" href="/index.html" target="_blank">
+        <img class="brand" src="./img/moneyMapIcon.png"></img>
+      </a>
+      <!-- Collapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!--Links-->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Left -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/index.html">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">About MoneyMap</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">Features</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="accountDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</a>
+            <div class="dropdown-menu dropdown-primary" aria-labelledby="accountDropdown"></div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" target="_blank" data-toggle="modal" data-target="#createTransactionModal" data-whatever="@getbootstrap">Log Transaction</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="log" href="#">console.log all transactions</a>
+          </li>
+        </ul>
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item">
+            <a href="https://github.com/abedababe8" class="nav-link border border-light rounded"
+              target="_blank"><i class="fa fa-github mr-2"></i>Abe Queen</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div class="fade-filler">
+  <div>
+    <h2></h2>
+    <p id="currentAcc"></p>
+  </div>
+</div>
+
+<div class="modal fade" id="createAccModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-createAcc">
+          <h1 class="h3 mb-3 font-weight-normal">What is the name of your new Account?</h1>
+          <label for="inputEmail" class="sr-only">Account</label>
+          <input type="text" name="accountName" id="accountName" class="form-control" placeholder="Account" required autofocus>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+          <div id="error" class="hide auth-error">BAD</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="modal fade" id="createTransactionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-createTransaction">
+            <h1 class="h3 mb-3 font-weight-normal">Please fill in the details of your transaction</h1>
+            <label for="amnt" class="sr-only">Ammount</label>
+            <input type="number" name="amnt" id="amnt" class="form-control" placeholder="Ammount" required autofocus>
+
+            <select name='tag' id='tag'>
+              <option value="" selected disabled hidden>Select a Tag</option>
+            </select>
+
+            <select name='deposit' id='deposit'>
+              <option value="" selected disabled hidden>Deposit or Withdrawal?</option>
+              <option value="true">Deposit</option>
+              <option value="false">Withdrawal</option>
+            </select>
+
+            <label for="memo" class="sr-only">Memo</label>
+            <input type="text" name="memo" id="memo" class="form-control" placeholder="Memo" required autofocus>
+
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+            <div id="error" class="hide auth-error">BAD</div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="doughnutChart"></canvas>
+
+
+  </footer>
+  <!--/.Footer-->
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+  // Animations initialization
+  new WOW().init();
+
+  </script>
+  <script src="/src/dashboard/doughnut.js"></script>
+</body>
+
+</html>

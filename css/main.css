@@ -5,3 +5,21 @@
   height: 45px;
   width: 45px;
 }
+.nav-item{
+  color: black
+}
+.fade-filler{
+  height:47vh;
+  width:100%;
+  background: linear-gradient(to bottom right, #00ffcc, #0099ff);
+}
+.changedNav{
+  background: linear-gradient(to bottom right, #00ffcc, #0099ff);
+}
+.modal-footer{
+  display: flex;
+  flex-wrap: wrap;
+}
+.hide-auth-error{
+  visibility: hidden;
+}
