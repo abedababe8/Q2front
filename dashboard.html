@@ -8,6 +8,7 @@
   <title>Q2</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
   <!-- Bootstrap core CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
@@ -23,8 +24,7 @@
   <script defer src="/src/dashboard/dashboard.js"></script>
     <style type="text/css">
 
-      html,
-      body,
+
       header,
       .carousel {
         height: 60vh;
@@ -78,40 +78,67 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">About MoneyMap</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">Features</a>
+            <a class="nav-link" href="" data-toggle="modal" data-target="#gettingStarted">Getting Started</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="accountDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</a>
             <div class="dropdown-menu dropdown-primary" aria-labelledby="accountDropdown"></div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" target="_blank" data-toggle="modal" data-target="#createTransactionModal" data-whatever="@getbootstrap">Log Transaction</a>
+            <a class="nav-link" target="_blank" data-toggle="modal" data-target="#createTransactionModal" data-whatever="@getbootstrap">Create Transaction</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="log" href="#">console.log all transactions</a>
+            <a class="nav-link" id="log" href="#">Show all Transactions</a>
           </li>
         </ul>
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons">
-          <li class="nav-item">
-            <a href="https://github.com/abedababe8" class="nav-link border border-light rounded"
-              target="_blank"><i class="fa fa-github mr-2"></i>Abe Queen</a>
-          </li>
         </ul>
       </div>
     </div>
   </nav>
 
-<div class="fade-filler">
-  <div>
-    <h2></h2>
-    <p id="currentAcc"></p>
-  </div>
+<div id="fade-filler" class="fade-filler1 text-center d-flex align-items-center">
+  <h1 class="mx-auto title">MoneyMap</h1>
 </div>
 
+<!-- MODALS -->
+<!-- GETTING STARTED -->
+<div class="modal fade" id="gettingStarted" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Getting Started</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <strong>Hello! Welcome to MoneyMap:</strong>
+        <hr>
+        <strong>If you haven't created an account yet:</strong>
+        <br>
+        Go ahead and click the Accounts dropdown and select Add Account
+        <br>
+        <strong>Once you have an account:</strong>
+        <br>
+        You can Add different deposits and withdrawals to the account with Create Transaction
+        <br>
+        <strong>To add another user to your account:</strong>
+        <br>
+        click the man icon to the right of your graph.
+        <br>
+        <strong>If you'd like to change your graph:</strong>
+        <br>
+        click on the respective icon to the right of your graph.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CREATE ACCOUNT MODAL -->
 <div class="modal fade" id="createAccModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -135,7 +162,31 @@
     </div>
   </div>
 </div>
-
+<!-- ADD USER TO ACCOUNT -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-addUser">
+          <h1 class="h3 mb-3 font-weight-normal">What is the Userame of the User you want to add?</h1>
+          <label for="findUser" class="sr-only">Username</label>
+          <input type="text" name="findUser" id="findUser" class="form-control" placeholder="Username" required autofocus>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+          <div id="error" class="hide auth-error">BAD</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CREATE TRANSACTION -->
   <div class="modal fade" id="createTransactionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -175,10 +226,66 @@
     </div>
   </div>
 
-  <canvas id="doughnutChart"></canvas>
+<!-- CHART ROW -->
+  <div id="canvas-row" class="row">
+    <div id="showAll" class="col-2 list-group"></div>
+    <div id="chartContainer" class="col-8">
+      <div id="doughnutContainer">
+        <canvas id="doughnutChart"></canvas>
+      </div>
+      <div id="pieContainer">
+        <canvas id="pieChart" class="hide"></canvas>
+      </div>
+      <div id="barContainer" class="hide">
+        <canvas id="barChart"></canvas>
+      </div>
+    </div>
+    <div class="col-2 d-flex align-items-center">
+      <span class="col-4">
+        <a>
+          <i id="pieButton" class="chartIcon fa fa-chart-pie mr-3"></i>
+        </a>
+        <a>
+          <i id="barButton" class="chartIcon fa fa-chart-bar mr-3"></i>
+        </a>
+        <a>
+          <i id="doughnutButton" class="chartIcon fa fa-dot-circle mr-3"></i>
+        </a>
+        <a>
+          <i id="addUsertoAccount" class="chartIcon fa fa-user-plus mr-3" target="_blank" data-toggle="modal" data-target="#addUserModal" data-whatever="@getbootstrap"></i>
+        </a>
+      </span>
+        <h2 id="currentAcc" class="mx-auto accTitle"></h2>
+    </div>
+  </div>
+</main>
+  <!--Footer-->
+  <footer class="page-footer text-center font-small wow fadeIn">
+    <hr class="my-4">
 
+    <!-- Social icons -->
+    <div class="pb-4">
+
+      <a href="https://github.com/abedababe8" target="_blank">
+        <i class="fab fa-github mr-3"></i>
+      </a>
+
+      <a href="https://www.linkedin.com/in/abrahamqueen/" target="_blank">
+        <i class="fab fa-linkedin mr-3"></i>
+      </a>
+    </div>
+    <!-- Social icons -->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      CSS and Animations:
+      © 2018 Copyright:
+      <a href="https://mdbootstrap.com/bootstrap-tutorial/" target="_blank"> MDBootstrap.com </a>
+    </div>
+    <!--/.Copyright-->
 
   </footer>
+
   <!--/.Footer-->
 
   <!-- SCRIPTS -->
@@ -196,7 +303,9 @@
   new WOW().init();
 
   </script>
+  <script src="/src/dashboard/pie.js"></script>
   <script src="/src/dashboard/doughnut.js"></script>
+  <script src="/src/dashboard/bar.js"></script>
 </body>
 
 </html>

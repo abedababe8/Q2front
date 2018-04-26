@@ -8,10 +8,11 @@
 .nav-item{
   color: black
 }
-.fade-filler{
-  height:47vh;
+.fade-filler1{
+  height:40vh;
   width:100%;
   background: linear-gradient(to bottom right, #00ffcc, #0099ff);
+  transition: background 2s
 }
 .changedNav{
   background: linear-gradient(to bottom right, #00ffcc, #0099ff);
@@ -22,4 +23,47 @@
 }
 .hide-auth-error{
   visibility: hidden;
+}
+.accTitle {
+  background: -webkit-linear-gradient(#00ffcc, #0099ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* margin-right: 10px; */
+  /* margin-top: 0px; */
+  width: 200px;
+  /* height: 100px; */
+  transform: rotate(90deg);
+}
+.lockNav {
+  background: linear-gradient(to bottom right, #00ffcc, #0099ff);
+}
+.title{
+  font-size: 55px;
+  font-style: italic;
+  font-weight: bold;
+  color: white;
+}
+.brandTitle{
+  font-size: 35px;
+  font-style: italic;
+  font-weight: bold;
+  color: white;
+}
+.page-footer{
+  background: linear-gradient(to bottom right, #0099ff, #00ffcc);
+  /* margin-bottom: 0px; */
+}
+.showAll {
+  overflow-y: scroll;
+  height: 50vh;
+}
+
+#canvas-row {
+  padding-top: 10px;
+  height: 100%;
+}
+.chartIcon {
+  height: 20px;
+  width: 20px;
+  color: #0099ff;
 }

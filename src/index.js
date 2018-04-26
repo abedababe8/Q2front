@@ -76,6 +76,11 @@ const createAccForm = document.querySelector('.form-createAcc')
 const signinButton = document.querySelector('.signinButton')
 
 
+// setInterval(function(){
+//   $('#fade-filler').css('opacity', '0')
+// }, 2000)
+
+
 signinButton.addEventListener('click', function(event){
   $(signInForm).toggleClass('hide')
   $(createAccForm).toggleClass('hide')

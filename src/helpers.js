@@ -51,6 +51,13 @@ function renderAccountMenu(){
           currentAcc.innerHTML = ''
           currentAcc.innerHTML = accountName
           localStorage.setItem('currentAcc', id)
+          if(whichChart === 1){
+            renderDoughnut()
+          } else if (whichChart === 2){
+            renderBar()
+          } else {
+            renderPie()
+          }
         })
         accountMenu.appendChild(accountLink)
       }
@@ -59,3 +66,105 @@ function renderAccountMenu(){
       console.log(error);
     })
 }
+
+function renderTransactionList(){
+  empty(showAll)
+  request(`/auth/token`)
+  .then(function(token){
+    const account_id = localStorage.getItem('currentAcc')
+    return request(`/users/${token.data.id}/accounts/${account_id}/transactions`)
+  })
+  .then(function(data){
+    let allTransactions = data.data.data
+    let name;
+    let count = 1
+    for (var trans of allTransactions){
+      switch (trans.tag_id) {
+        case 1:
+          name = "Not Specified"
+        break;
+        case 2:
+          name = "Auto"
+        break;
+        case 3:
+          name = "Income"
+        break;
+        case 4:
+          name = "Gift"
+        break;
+        case 5:
+          name = "Grocery"
+        break;
+        case 6:
+          name = "School"
+        break;
+        case 7:
+          name = "Work"
+        break;
+        case 8:
+          name = "Fun"
+        break;
+        case 9:
+          name = "Custom"
+        break;
+        case 10:
+          name = "Rent"
+        break;
+        default:
+        console.log('uh oh!');
+      }
+      console.log(count);
+      const transLi = document.createElement('div')
+        transLi.classList.add('list-group-item')
+        // if(count % 2 === 1){
+        transLi.classList.add('page-footer')
+        // } else {
+        //   transLi.style.background = 'linear-gradient(to bottom right, #0099ff, #00ffcc);'
+        // }
+        // count++
+      const transLiHead = document.createElement('div')
+        transLiHead.classList.add('list-group-item-heading')
+        transLiHead.innerHTML = `Ammount: ${trans.ammount}, Deposit: ${trans.deposit}, Tag: ${name}, User: ${trans.user_id}`
+      const transLiDel = document.createElement('a')
+        transLiDel.classList.add('list-group-item-text')
+        transLiDel.innerHTML = 'Delete Transaction'
+        transLiDel.style.color = 'red'
+        transLiDel.addEventListener('click', event => {
+          request(`/auth/token`)
+          .then(function(token){
+            const account_id = localStorage.getItem('currentAcc')
+            return request(`/users/${token.data.id}/accounts/${account_id}/transactions/${trans.id}`, 'delete')
+          })
+          .then(function(deletedTrans){
+            console.log(deletedTrans);
+            renderTransactionList()
+            if(whichChart === 1){
+              renderDoughnut()
+            } else if (whichChart === 2){
+              renderBar()
+            } else {
+              renderPie()
+            }
+          })
+          .catch(console.log)
+      })
+      transLi.appendChild(transLiHead)
+      transLi.appendChild(document.createElement('hr'))
+      transLi.appendChild(transLiDel)
+      showAll.appendChild(transLi)
+    }
+  })
+}
+
+$(document).ready (function () {
+ $(window).scroll (function () {
+    var sT = $(this).scrollTop();
+        if (sT >= 100) {
+            $('.title').toggleClass('hide')
+            $('.navbar').addClass('lockNav')
+        } else {
+            $('.title').removeClass('hide')
+            $('.navbar').removeClass('lockNav')
+        }
+  })
+})
