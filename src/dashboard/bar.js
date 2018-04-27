@@ -6,7 +6,6 @@ var ctxB = document.getElementById("barChart").getContext('2d');
     return request(`/users/${token.data.id}/accounts/${account_id}/transactions`)
   })
   .then(function(data){
-    console.log(data.data.data);
     let uniqueTags = []
     let uniqueTagNames = []
     let uniqueAmnts = []

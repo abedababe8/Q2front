@@ -12,7 +12,6 @@
   })
 
 const signInForm = document.querySelector('.form-signin')
-
   // login form
   signInForm.addEventListener('submit', function(event){
     event.preventDefault()
@@ -22,6 +21,7 @@ const signInForm = document.querySelector('.form-signin')
 
     request('/auth/token', 'post', { username , password })
     .then(function(response){
+      console.log(response);
       document.querySelector('#error').classList.add('hide-auth-error')
       localStorage.setItem('token', response.data.token)
       window.location = '/dashboard.html'
@@ -69,12 +69,32 @@ $('a[href*="#"]')
     }
   });
 
-const signInForm = document.querySelector('.form-signin')
+  const createAccForm = document.querySelector('.form-createAcc')
+    createAccForm.addEventListener('submit', function(event){
+      event.preventDefault()
+      const new_username = event.target.new_username.value
+      const new_password = event.target.new_password.value
+      request('/users', 'post', { new_username, new_password })
+      .then(function(newUser){
+        const username = event.target.new_username.value
+        const password = event.target.new_password.value
+        request('/auth/token', 'post', { username , password })
+        .then(function(response){
+          console.log(response);
+          document.querySelector('#error').classList.add('hide-auth-error')
+          localStorage.setItem('token', response.data.token)
+          window.location = '/dashboard.html'
+        })
+        .catch(function(error){
+          document.querySelector('#error').classList.remove('hide-auth-error')
+        })
+      })
+    })
 
 const createAcc = document.querySelector('.createAcc')
-const createAccForm = document.querySelector('.form-createAcc')
 const signinButton = document.querySelector('.signinButton')
-
+const signInForm = document.querySelector('.form-signin')
+// const createAccForm = document.querySelector('.form-createAcc')
 
 // setInterval(function(){
 //   $('#fade-filler').css('opacity', '0')

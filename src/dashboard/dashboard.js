@@ -77,18 +77,22 @@ accountCreator.innerHTML = 'Add Account'
 
 createAccForm.addEventListener('submit', function(event){
   event.preventDefault()
-
   const accName = event.target.accountName.value
-  console.log(accName, 1);
   request(`/auth/token`)
   .then(function(token){
-    console.log(accName, 2);
     return request(`/users/${token.data.id}/accounts`, 'post', { accName })
     })
     .then(function(newAcc){
-
-    console.log('in the database');
+      console.log(newAcc);
+    localStorage.setItem('currentAcc', newAcc.data[0].id)
     renderAccountMenu()
+    if(whichChart === 1){
+      renderDoughnut()
+    } else if (whichChart === 2){
+      renderBar()
+    } else {
+      renderPie()
+    }
   })
 })
 
@@ -100,9 +104,13 @@ accountDropDown.addEventListener('click', function(event){
 transactionForm.addEventListener('submit', function(event){
   event.preventDefault()
   const amnt = event.target.amnt.value
+  event.target.amnt.value = ''
   const tag = event.target.tag.value
+  event.target.tag.value = ''
   const deposit = event.target.deposit.value
+  event.target.deposit.value = ''
   const memo = event.target.memo.value
+  event.target.memo.value = ''
   console.log(amnt, tag, deposit, memo);
 
   request(`/auth/token`)
